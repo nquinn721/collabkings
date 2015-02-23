@@ -4,7 +4,7 @@ function FileManager() {
 	this.folders = [];
 
 	// HTML Collections
-	this.projectArea = $('.projects');
+	this.projectArea = $('.project-area');
 }
 
 FileManager.prototype = {
