@@ -41,7 +41,7 @@ File.prototype = {
 		return false;
 	},
 	getParents : function () {
-
+		console.log(this.file);
 		if(this.file.match(/\\/)){
 			var f = this.file.split('\\');
 			this.file = f[f.length - 1];
