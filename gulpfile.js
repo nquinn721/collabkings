@@ -9,11 +9,11 @@ var wat
 var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('style', function () {
-  gulp.src(__dirname +'/../client/public/style/main.styl')
+  gulp.src(__dirname +'/client/public/style/main.styl')
     .pipe(stylus({
       compress: true
     }))
-    .pipe(gulp.dest(__dirname +'/../client/public/css'));
+    .pipe(gulp.dest(__dirname +'/client/public/css'));
 });
 
 // External sourcemaps 
@@ -22,13 +22,13 @@ gulp.task('sourcemaps-external', function () {
     .pipe(sourcemaps.init())
     .pipe(stylus())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(__dirname +'/../client/public/css'));
+    .pipe(gulp.dest(__dirname +'/client/public/css'));
 });
 
 
 
 gulp.task('watch', function () {
-    gulp.watch([__dirname + '/../client/public/style/*.styl'], ['style', 'sourcemaps-external']);
+    gulp.watch([__dirname + '/client/public/style/*.styl'], ['style', 'sourcemaps-external']);
 });
 
 // Default gulp task to run 
