@@ -22,17 +22,17 @@ app.use(express.static(dir + '/../client/public'));
 
 
 // IoC Container
-var IoC = require(dir + '/lib/IoC.js');
+var IoC = require(dir + '/lib/ioc.js');
 
 // Base class for all classes to inherit from
-var base = require(dir + '/lib/Base.js');
+var base = require(dir + '/lib/base.js');
 
 // Manager
-var manager = require(dir + '/lib/Manager.js');
+var manager = require(dir + '/lib/manager.js');
 
 // config
 var config = require(dir + '/app/config/config.js');
-var ConfigClass = require(dir + '/lib/Config.js').init(config);
+var ConfigClass = require(dir + '/lib/config.js').init(config);
 var settings = require(dir + '/app/config/settings.js');
 
 // Inherited Modules
