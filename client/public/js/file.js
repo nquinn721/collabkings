@@ -42,7 +42,7 @@ File.prototype = {
 	},
 	getParents : function () {
 
-		if(this.file.indexOf("\\") > -1){
+		if(this.file.indexOf(/\\/) > -1){
 			var f = this.file.split('\\');
 			this.file = f[f.length - 1];
 			this.parent = $('.' + f[f.length - 2]);
