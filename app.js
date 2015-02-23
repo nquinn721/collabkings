@@ -1,18 +1,17 @@
 var express = require('express'),
 	app 	= express(),
-	server 	= require('http').Server(app),
+	// server 	= require('http').Server(app),
+	port 	= process.env.PORT || 3000,
+	server 	= app.listen(port),
+	io 		= require('socket.io')(server),
 	fs		= require('fs'),
 	stylus 	= require('stylus'),
 	nib		= require('nib'),
-	io 		= require('socket.io')(server),
-	port 	= process.env.PORT || 3000,
 	dir 	= __dirname + "/server";
 console.log(__dirname + "/server");
-app.listen(port, function  () {
-	console.log("\nStarting server on port " + port + "\n");
-});
 
-io.listen(4000);
+
+// io.listen(4000);
 app.set('views', dir + '/../client');
 app.set('view engine', 'jade');
 
