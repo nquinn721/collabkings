@@ -46,6 +46,7 @@ File.prototype = {
 			console.log(f, f[f.length - 1])
 			this.file = f[f.length - 1];
 			this.parent = $('.' + f[f.length - 2]);
+			console.log(f, f[f.length], f[f.length - 1], f[f.length - 2])
 		}
 	}
 }
