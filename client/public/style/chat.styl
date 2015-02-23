@@ -1,0 +1,85 @@
+.context-menu
+    width 100px
+    background white
+    border 1px solid #777
+    position absolute
+    top 0
+    right 0
+    border-radius 5px
+    display none
+    .menu-item
+        padding 5px
+        cursor pointer
+        &:hover
+            background #ddd
+.chat 
+    position fixed
+    bottom 0
+    right 100px
+    width 600px
+    height 400px
+    border 1px solid black
+    z-index 1100
+
+    .chat-header 
+        height 30px
+        background #1f6da8
+        position absolute
+        z-index 1
+        width 100%
+        padding 6px
+        color white
+        cursor pointer
+    
+    .chat-body 
+        height 100%
+        position absolute
+        top 0
+        left 0
+        width 80%
+        border-right 1px solid rgb(201, 208, 217)
+        padding-top 30px
+        background #c1dbf6
+        .chat-msg-area
+            overflow-y auto
+            height 100%
+            > div 
+                padding 10px
+                
+    .chat-users 
+        position absolute
+        right 0
+        width 20%
+        height 100%
+        border-left 1px solid #354e72
+        padding-top 30px
+        background white
+    
+    .chat-msg-type 
+        position absolute
+        bottom 0
+        width 100%
+        background white
+        border-top 1px solid #8F8F8F
+    
+    .chat-msg-type input 
+        width 100%
+        padding 6px
+        border none 
+    
+    .user
+        padding-top 5px
+        cursor pointer
+        padding-bottom 5px
+        padding 5px 
+        &:hover 
+            background #999
+
+    
+    .msg 
+        word-wrap wrap-word
+        
+
+   
+    
+

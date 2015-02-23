@@ -1,0 +1,1 @@
+.chat{position:fixed;bottom:0;right:100px;width:40%;height:30%;border:1px solid #000}.chat-header{height:30px;background:#1f6da8;position:absolute;z-index:1;width:100%}.chat-body{height:100%;position:absolute;top:0;left:0;width:80%;padding-top:30px;background:#c1dbf6}.chat-users{position:absolute;right:0;width:20%;height:100%;padding-top:30px}

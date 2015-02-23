@@ -1,0 +1,96 @@
+include includes/header
+
+block content
+	.context-menu
+	.login
+		form Pick a username
+			br
+			input.username
+			input(type="submit", value="Start", class="username-picked")
+	.header
+		.logo CollabKings
+		.editor-options
+			.theme
+				select
+					option(value="monokai_sublime.css") Monokai
+					- for(i in styles)
+						- if(styles[i] == 'monokai_sublime.css' || styles[i] == 'monokai.css')continue;
+						- var style = styles[i].split('.')[0];
+						- var name = style.substr(0,1).toUpperCase() + style.substr(1);
+						- if(name.indexOf('_') > -1)
+							- name = name.split('_').join(' ')
+						option(value="#{styles[i]}") #{name}
+			//- .language
+			//- 	select
+			//- 		option Javascript
+			//- 		option HTML
+			//- 		option CSS
+	pre.code-area.hljs
+		.numbers
+		code.editor(class="javascript")
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+			.row function(){
+			.row 	this.whatever = 'yep';
+			.row }
+			.row var bob = "yo Chickens";
+			.row var jeff = ['sup', 10, 15];
+			.row var coolManG = {yo : 'sup'}
+	.projects
+	.chat
+		.chat-header
+			.username-area
+			.quick-msg
+			.options
+		.chat-body
+			.chat-msg-area: div
+			.chat-msg-type
+				input.chat-msg(type="text")
+		.chat-users
+include includes/footer
