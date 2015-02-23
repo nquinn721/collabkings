@@ -1,4 +1,4 @@
-var io = io.connect('http://localhost:4000');
+var io = io.connect();
 
 var manager = new Manager;
 
