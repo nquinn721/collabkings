@@ -5,7 +5,7 @@ var express = require('express'),
 	stylus 	= require('stylus'),
 	nib		= require('nib'),
 	io 		= require('socket.io')(server),
-	port 	= 3000,
+	port 	= process.env.PORT || 3000,
 	dir 	= __dirname + "/server";
 console.log(__dirname + "/server");
 app.listen(port, function  () {
