@@ -7,7 +7,7 @@ var express = require('express'),
 	io 		= require('socket.io')(server),
 	port 	= 3000,
 	dir 	= __dirname + "/server";
-
+console.log(__dirname + "/server");
 app.listen(port, function  () {
 	console.log("\nStarting server on port " + port + "\n");
 });
