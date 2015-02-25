@@ -10,7 +10,6 @@ $('.username').focus();
 $('.code-area').mCustomScrollbar();
 
 
-hljs.initHighlightingOnLoad();
 
 
 

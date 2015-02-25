@@ -26,6 +26,9 @@ FileManager.prototype = {
 		} 
 
 	},
+	addUser : function () {
+		
+	},
 	parseFiles : function (files) {
 		for(var i in files)
 			this.createFile(files[i]);

@@ -8,7 +8,6 @@ var express = require('express'),
 	stylus 	= require('stylus'),
 	nib		= require('nib'),
 	dir 	= __dirname + "/server";
-console.log(__dirname + "/server");
 
 
 // io.listen(4000);
