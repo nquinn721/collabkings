@@ -1,32 +1,40 @@
 function Manager () {
 	// Inherited Classes
-	this.chat 	= new Chat;
-	this.editor = new EditorManager;
-	this.files 	= new FileManager;
-	this.user 	= new UserManager;
+	this.chatManager 	= new ChatManager;
+	this.editorManager 	= new EditorManager;
+	this.fileManager 	= new FileManager;
+	this.userManager 	= new UserManager;
 
 }
 
 Manager.prototype = {
 	init : function  () {
 		this.eventHandlers();
-		this.editor.init();
-		// if(localStorage.user){
-		// 	this.login(localStorage.user);
-		// }
+		this.socketHandlers();
+		this.initManagers();
+	},
+	initManagers : function  () {
+		this.chatManager.init();
+		this.fileManager.init();
+		this.userManager.init();
+		this.editorManager.init();
 	},
 	startChat : function (user) {
 		localStorage.user = user;
-		this.chat.init(user);
+		this.chatManager.init(user);
 	},
-	addUser : function (user) {
-		var user = this.user.addUser(user);
-		this.chat.addUser(user);
-		this.files.addUser(user);
-		this.editor.addUser(user);
+	addUser : function (users) {
+		var user = this.userManager.createUser(user);
+		this.chatManager.addUser(user);
+		this.fileManager.addUser(user);
+		this.editorManager.addUser(user);
+		this.userManager.addUser(user);
 	},
-	removeUser : function () {
-		
+	removeUser : function (user) {
+		this.chatManager.removeUser(user);
+		this.fileManager.removeUser(user);
+		this.editorManager.removeUser(user);
+		this.userManager.removeUser(user);
 	},
 
 	eventHandlers : function () {
@@ -43,6 +51,10 @@ Manager.prototype = {
 			self.changeLanguage($(this).val());
 		});
 	},
+	socketHandlers : function  () {
+		io.on('add-user', this.addUser.bind(this));
+		io.on('remove-user', this.removeUser.bind(this));
+	},
 	
 	hideLogin : function () {
 		$('.login').hide();
@@ -50,10 +62,10 @@ Manager.prototype = {
 	
 	login : function (username) {
 		var username = $('.username').val();
-		this.startChat(username);
+		// this.startChat(username);
 		this.hideLogin();
-		this.user.init(username);
-		this.files.init();
+		// this.userManager.init(username);
+		// this.files.init();
 
 		return false;
 
