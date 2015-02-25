@@ -59,10 +59,10 @@ Editor.prototype = {
 
 
 		if(ck === 'enter'){
-			var chars = this.getRemainingCharacters();
+			// var chars = this.getRemainingCharacters();
 			this.createRow();
 			this.moveDownRow();
-			this.addRemainingCharacters(chars);
+			// this.addRemainingCharacters(chars);
 		}else if(ck === 'up'){
 			this.moveUpRow();
 		}else if(ck === 'down'){
