@@ -16,7 +16,6 @@ module.exports = {
 			socket.on('login', function(user){
 				socket.user = user;
 				self.users.push(user);
-				console.log(self.users);
 				io.emit('users', self.users);
 			});
 

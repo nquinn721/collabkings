@@ -1,7 +1,7 @@
 function Manager () {
 	// Inherited Classes
 	this.chat 	= new Chat;
-	this.editor = new Editor;
+	this.editor = new EditorManager;
 	this.files 	= new FileManager;
 	this.user 	= new UserManager;
 
@@ -19,6 +19,15 @@ Manager.prototype = {
 		localStorage.user = user;
 		this.chat.init(user);
 	},
+	addUser : function (user) {
+		var user = this.user.addUser(user);
+		this.chat.addUser(user);
+		this.files.addUser(user);
+		this.editor.addUser(user);
+	},
+	removeUser : function () {
+		
+	},
 
 	eventHandlers : function () {
 		var self = this;
@@ -34,12 +43,7 @@ Manager.prototype = {
 			self.changeLanguage($(this).val());
 		});
 	},
-	changeLanguage : function (language) {
-		this.editor.changeLanguage(language);
-	},
-	changeTheme : function (theme) {
-		this.editor.changeTheme(theme);
-	},
+	
 	hideLogin : function () {
 		$('.login').hide();
 	},

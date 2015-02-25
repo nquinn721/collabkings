@@ -11,7 +11,9 @@ UserManager.prototype = {
 		this.login(user);
 	},
 	addUser : function (user) {
-		this.users.push(new User(user));
+		var user = new User(user);
+		this.users.push(user);
+		return user;
 	},
 	removeUser : function (user) {
 		if(typeof user === 'string'){

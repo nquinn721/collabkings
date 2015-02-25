@@ -1,0 +1,82 @@
+.javascriptEditor
+	height 100%
+
+	.code-area
+		cursor text
+		width 80%
+		height 100%
+		display block
+		position absolute
+		padding 0
+		padding-top 50px
+		overflow hidden
+		top 0
+		overflow-y auto
+		no-select()
+		> div
+			border-top 1px solid #777
+			width 100%
+			padding-left 10px
+
+		.numbers
+			display inline-block
+			vertical-align top
+			width 3%
+			text-align center
+			border-right 1px solid #999
+			color #999
+			padding-top 8px
+			padding-bottom 15px
+			
+		.row
+			height 20px
+		.row-number
+			height 20px
+
+		.editor 
+			display inline-block
+			width 97%
+			outline none
+		.character
+			display inline-block
+			height 100%
+			line-height 20px
+			vertical-align top
+			font-size 15px
+		.cursor 
+			width  2px
+			height 100%
+			background #999
+			margin-right -1px
+			margin-left -1px
+			display inline-block
+			-webkit-animation: cursor 2s infinite;
+			-moz-animation:    cursor 2s infinite;
+			-o-animation:      cursor 2s infinite;
+			animation:         cursor 2s infinite;
+
+		@-webkit-keyframes cursor {
+		  0%   { opacity: 1; }
+		  25%   { opacity: 0; }
+		  50%   { opacity: 1; }
+		  100% { opacity: 1; }
+		}
+		@-moz-keyframes cursor {
+		  0%   { opacity: 1; }
+		  25%   { opacity: 0; }
+		  50%   { opacity: 1; }
+		  100% { opacity: 1; }
+		}
+		@-o-keyframes cursor {
+		  0%   { opacity: 1; }
+		  25%   { opacity: 0; }
+		  50%   { opacity: 1; }
+		  100% { opacity: 1; }
+		}
+		@keyframes cursor {
+		  0%   { opacity: 1; }
+		  25%   { opacity: 0; }
+		  50%   { opacity: 1; }
+		  100% { opacity: 1; }
+		}
+		
