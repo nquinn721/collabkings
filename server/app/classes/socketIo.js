@@ -1,5 +1,6 @@
 module.exports = {
 	users : [],
+	colors : ['red', 'green', 'yellow', 'pink', 'purple', 'blue', 'brown'],
 	wrench : require('wrench'),
 	init : function  (io) {
 		this.io = io;
@@ -14,10 +15,17 @@ module.exports = {
 			});
 			
 			socket.on('login', function(user){
-				socket.user = user;
+				socket.user = {
+					user : user, 
+					color : self.colors[Math.round(Math.random() * self.colors.length)]
+				};
 				self.users.push(user);
-				io.emit('users', self.users);
+				io.emit('add-user', user);
 			});
+
+			socket.on('get-all-users', function () {
+				io.emit('all-users', self.users);
+			})
 
 			socket.on('projects', function () {
 				var name = socket.user.toLowerCase(),
@@ -28,7 +36,7 @@ module.exports = {
 			socket.on('disconnect', function () {
 				if(socket.user){
 					self.users.splice(self.users.indexOf(socket.user), 1);
-					io.emit('logout', socket.user);
+					io.emit('remove-user', socket.user);
 				}
 			});
 		});

@@ -1,17 +1,11 @@
-function UserManager () {
-	// Current User
-	this.user;
-
-	// User Collection
+function ChatManager () {
+	// Collections
 	this.users = [];
 }
 
-UserManager.prototype = {
-	init : function () {
-	},
-	createUser : function (user) {
-		var user = new User(user);
-		return user;
+ChatManager.prototype = {
+	init : function  () {
+		
 	},
 	addUser : function (user) {
 		this.users.push(user);
@@ -28,5 +22,5 @@ UserManager.prototype = {
 			this.users.splice(this.users.indexOf(user), 1);
 		}		
 
-	}
+	},
 }
