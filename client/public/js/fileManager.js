@@ -2,13 +2,16 @@ function FileManager() {
 	// Collection
 	this.files = [];
 	this.folders = [];
+	this.users = [];
 
 	// HTML Collections
 	this.projectArea = $('.file-manager');
 }
 
 FileManager.prototype = {
-	init : function () {
+	init : function (manager, user) {
+		this.user = user;
+		this.manager = manager;
 		this.getProjects();
 		this.socketHandlers();
 		this.eventHandlers();
