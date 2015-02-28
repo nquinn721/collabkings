@@ -20,7 +20,8 @@ module.exports = {
 					color : self.colors[Math.round(Math.random() * self.colors.length)]
 				};
 				self.users.push(user);
-				io.emit('add-user', user);
+				socket.emit('init', socket.user);
+				socket.broadcast.emit('add-user', socket.user);
 			});
 
 			socket.on('get-all-users', function () {
@@ -28,9 +29,9 @@ module.exports = {
 			})
 
 			socket.on('projects', function () {
-				var name = socket.user.toLowerCase(),
-					projects = self.wrench.readdirSyncRecursive(__dirname + "/../projects/" + name);
-				socket.emit("projects", projects);
+				// var name = socket.user.usertoLowerCase(),
+				// 	projects = self.wrench.readdirSyncRecursive(__dirname + "/../projects/" + name);
+				// socket.emit("projects", projects);
 			});
 
 			socket.on('disconnect', function () {

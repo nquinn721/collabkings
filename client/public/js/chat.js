@@ -1,4 +1,4 @@
-function Chat (user){
+function Chat (){
 	var chat = $('.chat');
 	this.chat = chat;
 	this.header = chat.find('.chat-header');
@@ -16,11 +16,12 @@ function Chat (user){
 Chat.prototype = {
 	init : function  (user) {
 		this.user = user;
-
 		this.eventHandlers();
 		this.socketHandlers();
 		this.textInput.focus();
-		this.username.text(this.user);
+		this.username.text(this.user.user);
+		this.addUser(this.user);
+
 	},
 	displayMessage : function (msg) {
 		var ms = this.msgArea,
@@ -47,20 +48,20 @@ Chat.prototype = {
 	},
 	socketHandlers : function () {
 		io.on('msg', this.displayMessage.bind(this));
-		io.on('users', this.manageUsers.bind(this));
-		io.on('logout', this.logout.bind(this));
+		io.on('all-users', this.manageUsers.bind(this));
 	},
 	manageUsers : function (usersList) {
 		this.usersArea.text('');
-		for(var i in usersList){
-			if(usersList[i]){
-				var name = usersList[i].split(' ').join('').toLowerCase(),
-					user = $('<div>', {class : 'user', user : name}),
-					fa = $('<i>', {class : 'fa fa-user'});
-
-				this.usersArea.append(user.append(fa,' ' + usersList[i]));
-			}
-		}
+		for(var i in usersList)
+			if(usersList[i])
+				this.addUser(usersList[i]);
+	},
+	addUser : function (user) {
+		var name = user.user.split(' ').join('').toLowerCase(),
+			u = $('<div>', {class : 'user', user : name}),
+			fa = $('<i>', {class : 'fa fa-user'});
+		
+		this.usersArea.append(u.append(fa,' ', user.user));	
 	},
 	logout : function (user) {
 		var user = user.split(' ').join('').toLowerCase();

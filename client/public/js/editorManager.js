@@ -4,7 +4,8 @@ function EditorManager() {
 }
 
 EditorManager.prototype = {
-	init : function  () {
+	init : function  (manager) {
+		this.manager = manager;
 		this.createEditor();
 	},
 	addUser : function (user) {

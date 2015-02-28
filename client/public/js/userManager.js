@@ -7,7 +7,9 @@ function UserManager () {
 }
 
 UserManager.prototype = {
-	init : function () {
+	init : function (manager, user) {
+		this.manager = manager;
+		this.user = new User(user);
 	},
 	createUser : function (user) {
 		var user = new User(user);

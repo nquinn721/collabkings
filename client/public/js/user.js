@@ -5,6 +5,5 @@ function User (user) {
 
 User.prototype = {
 	login : function () {
-		io.emit("login", this.user);
 	}
 }

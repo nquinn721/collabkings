@@ -25,16 +25,14 @@ Editor.prototype = {
 		this.getKeyCodes();
 	},
 	createRow : function () {
-		var row = new Row(this.totalRows);
-		row.init();
+		var row = new Row();
+		row.init(this.totalRows);
 		this.totalRows++;
 		this.rows.push(row);
 		this.showRows();
 		return row;
 	},
-	getRow : function () {
-		return this.currentRow;
-	},
+	
 	showRows : function () {
 		this.numbers.html('');
 		this.editor.html('');
@@ -50,19 +48,37 @@ Editor.prototype = {
 		this.codeArea.on('click', this.handleClick.bind(this));
 		this.editor.on('keydown', this.handleKeyup.bind(this));
 	},
+	handleClick : function (e) {
+		var id = e.target ? e.target.id : e,
+			row;
+		this.editor.focus();
+
+		if(id.match('character')){
+			this.clearRowCursors();
+			row = this.getRowById(e.target.parentNode.id);
+			row.moveCursorToCharacter(row, id);
+		} else if(id.match('row')){
+			row = this.getRowById(id);
+			this.moveCursor(row);
+		}else{
+			row = this.rows[this.rows.length - 1];
+			this.moveCursor(row);
+		}
+
+
+
+	},
 	handleKeyup : function (e) {
 		var row = this.getRowHasCursor(),
 			ck = this.keyCodes[e.keyCode];
-
+			
 		// Dont handle any key events if no row has cursor
 		if(!row)return;
 
 
 		if(ck === 'enter'){
-			// var chars = this.getRemainingCharacters();
 			this.createRow();
 			this.moveDownRow();
-			// this.addRemainingCharacters(chars);
 		}else if(ck === 'up'){
 			this.moveUpRow();
 		}else if(ck === 'down'){
@@ -75,66 +91,41 @@ Editor.prototype = {
 			return this.addCharacter(e);
 		}
 	},
-	getRemainingCharacters : function  () {
-		return this.currentRow.enter();
-	},
-	addRemainingCharacters : function (chars) {
-		this.currentRow.addCharacters(chars);
-	},
+	
 	moveDownRow : function () {
 		var row = this.getRowBelow();
-		this.addCursor(row);
-		this.currentRow = row;
+		var pos = this.currentRow.getCursorPos();
+		this.moveCursor(row, pos);
 	},
 	moveUpRow : function  () {
 		var row = this.getRowAbove();
-		this.addCursor(row);
-		this.currentRow = row;
+		var pos = this.currentRow.getCursorPos();
+		this.moveCursor(row, pos);
 	},
-	handleClick : function (e) {
-		var id = e.target ? e.target.id : e,
-			row;
-		console.log(id);
-		this.editor.focus();
-
-		if(id.match('character')){
-			this.clearRowCursors();
-			row = this.getRowById(e.target.parentNode.id);
-			row.moveCursorToCharacter(row, id);
-		} else if(id.match('row')){
-			row = this.getRowById(id);
-			this.addCursor(row, e);
-		}else{
-			row = this.rows[this.rows.length - 1];
-			this.addCursor(row, e);
-		}
-
-
-
-	},
-	addCursor : function (row) {
+	
+	moveCursor : function (row, pos) {
 		if(!row)return;
-		this.clearRowCursors();
-		row.addCursor();
+		row.addCursor(pos);
 		this.currentRow = row;
+		this.updateHighlighter();
 	},
 	addCharacter : function (e) {
-		var row = this.getRowHasCursor();
+		var row = this.currentRow;
 		var ch = this.keyCodes[e.keyCode];
-
 
 		if(ch === 'spacebar')
 			ch = ' ';
 		if(ch === 'tab')
 			ch = '   ';
 
-		if(ch === 'backspace' && row){
+		if(ch === 'backspace'){
 			row.removeCharacter();
-			return false;
-		}else if(row)
+		}else{
 			ch = this.checkShift(e, ch);
 			ch = this.checkCtrl(e, ch);
-			row.addCharacter(ch, 1);
+			row.addCharacter(ch);
+		}
+		this.updateHighlighter();
 	},
 	checkShift : function (e, ch) {
 		if(e.shiftKey){
@@ -183,6 +174,11 @@ Editor.prototype = {
 		for(var i in this.rows)
 			if(this.rows[i].hasCursor)
 				return this.rows[i];	
+	},
+	updateHighlighter : function  () {
+		$('.editor').each(function(i, f){
+			hljs.highlightBlock(f);
+		});
 	},
 
 	getKeyCodes : function () {
