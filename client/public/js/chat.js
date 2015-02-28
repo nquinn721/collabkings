@@ -68,7 +68,7 @@ Chat.prototype = {
 		this.usersArea.find('[user=' +  user + ']').remove();
 	},
 	emit : function (msg) {
-		io.emit('msg', {user : this.user, msg : msg});
+		io.emit('msg', {user : this.user.user, msg : msg});
 	},
 	minimize : function () {
 
