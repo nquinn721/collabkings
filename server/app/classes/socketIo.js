@@ -29,9 +29,9 @@ module.exports = {
 			})
 
 			socket.on('projects', function () {
-				// var name = socket.user.usertoLowerCase(),
-				// 	projects = self.wrench.readdirSyncRecursive(__dirname + "/../projects/" + name);
-				// socket.emit("projects", projects);
+				var name = socket.user.user.toLowerCase(),
+					projects = self.wrench.readdirSyncRecursive(__dirname + "/../projects/" + name);
+				socket.emit("projects", projects);
 			});
 
 			socket.on('disconnect', function () {
