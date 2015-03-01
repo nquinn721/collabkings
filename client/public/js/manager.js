@@ -41,9 +41,14 @@ Manager.prototype = {
 		var self = this;
 		$('.username').focus();
 		$('.code-area').mCustomScrollbar();
+		$('.file-body').mCustomScrollbar({
+			scrollInertia : 100
+		});
 
-		$(document).on('click', function () {
-			$('.context-menu').hide();
+		$(document).on('click', function (e) {
+			if(!$(e.target).parent().hasClass('context')){
+				$('.context').hide();
+			}
 		});
 
 		$('.login form').on('submit', this.login.bind(this));

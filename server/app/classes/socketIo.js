@@ -2,7 +2,8 @@ module.exports = {
 	users : [],
 	colors : ['red', 'green', 'yellow', 'pink', 'purple', 'blue', 'brown'],
 	wrench : require('wrench'),
-	init : function  (io) {
+	init : function  (io, projects) {
+		this.projects = projects;
 		this.io = io;
 	},
 	ready : function  () {
@@ -14,6 +15,12 @@ module.exports = {
 				io.emit('msg', msg);
 			});
 			
+			socket.on('project', function(action){
+				self.projects.manage(action, function(){
+					self.updateProjects(socket);
+				})
+			});
+
 			socket.on('login', function(user){
 				socket.user = {
 					user : user, 
@@ -28,10 +35,8 @@ module.exports = {
 			socket.on('get-all-users', function () {
 			})
 
-			socket.on('projects', function () {
-				var name = socket.user.user.toLowerCase(),
-					projects = self.wrench.readdirSyncRecursive(__dirname + "/../projects/" + name);
-				socket.emit("projects", projects);
+			socket.on('projects', function(){
+				 self.updateProjects(socket);
 			});
 
 			socket.on('disconnect', function () {
@@ -41,5 +46,10 @@ module.exports = {
 				}
 			});
 		});
+	},
+	updateProjects : function (socket) {
+		var name = socket.user.user.toLowerCase(),
+			projects = this.wrench.readdirSyncRecursive(__dirname + "/../projects/" + name);
+		socket.emit("projects", projects);
 	}
 }

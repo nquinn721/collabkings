@@ -2,7 +2,10 @@ include includes/header
 
 block content
 	.row
-	.context-menu
+	.context-menu.context
+	.create-file
+		.top Create File
+		.bottom: input
 	.login
 		form Pick a username
 			br
@@ -32,6 +35,16 @@ block content
 				.collab-head Collaborators
 				.collab-body
 			.file-manager
+				.folder-context.context
+					.createFolder Create Folder
+					.createFile Create File
+					.moveFolder Move
+					.deleteFolder Delete
+					.renameFolder Rename
+				.file-context.context
+					.moveFile Move
+					.deleteFile Delete
+					.renameFile Rename
 				.file-head Projects
 				.file-body
 			.shared-files

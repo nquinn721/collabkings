@@ -1,3 +1,16 @@
+.create-file 
+	position absolute
+	top 20%
+	height 75px
+	width 200px
+	left 40%
+	z-index 9999
+	background #434343
+	padding 10px
+	color white
+	text-align center
+	display none
+
 .projects 
 	no-select()
 	position absolute
@@ -15,20 +28,32 @@
 		// background #222
 		height 33%
 		// border 1px solid rgb(118, 117, 117)
-		overflow-y auto
 		// padding 10px
 		.collab-head,
 		.file-head,
 		.shared-head
 			padding-bottom 5px
 			border-bottom 1px solid #444
-
-
-
-	.project-area 
+		.file-body
+			overflow-y auto
+			height 87%
+		.folder-context 
+			position absolute
+			border 1px solid #999
+			z-index 9999
+			background white
+			color black
+			display none
+			div 
+				padding 5px 10px
+				cursor pointer
+				&:hover 
+					background  #999
+					color  #eee
+	.project-area
 		height 100%
 		padding 10px
-		border-top: 1px solid #777;
+		border-top: 1px solid #777
 	
 	.file 
 		font-size 15px
