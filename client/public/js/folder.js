@@ -1,6 +1,7 @@
 function Folder (file, projectArea) {
 	this.projectArea = projectArea;
 	this.file = file;
+	this.url = file;
 }
 
 Folder.prototype = {
@@ -10,7 +11,7 @@ Folder.prototype = {
 	},
 
 	createFolder : function () {
-		var folder = $('<div>', {class : 'project ' + this.file}),
+		var folder = $('<div>', {class : 'project ' + this.file, url : this.url}),
 			i = $('<i>', {class : 'fa fa-folder-o'});
 
 		this.folder = folder;

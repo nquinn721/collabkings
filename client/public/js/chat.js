@@ -54,7 +54,6 @@ Chat.prototype = {
 		io.on('all-users', this.manageUsers.bind(this));
 	},
 	manageUsers : function (usersList) {
-		console.log(usersList);
 		this.usersArea.text('');
 		for(var i in usersList)
 			if(usersList[i])
