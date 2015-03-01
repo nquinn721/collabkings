@@ -12,7 +12,6 @@ ChatManager.prototype = {
 	},
 	addUser : function (user) {
 		this.users.push(user);
-		this.chat.manageUsers(this.users);
 	},
 	removeUser : function (user) {
 		if(typeof user === 'string'){

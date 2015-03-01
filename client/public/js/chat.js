@@ -32,14 +32,17 @@ Chat.prototype = {
 
 		if(wr.scrollTop() + wr.height() >= ms.height())
 			wr.scrollTop(ms.height());
-		
+	},
+	enter : function  () {
 		this.textInput.val('').focus();
 	},
 	eventHandlers : function  () {
 		var self = this;
 		this.textInput.on('keydown', function (e) {
-			if(e.keyCode === 13 && $(this).val() !== '')
+			if(e.keyCode === 13 && $(this).val() !== ''){
 				self.emit($(this).val());
+				self.enter();
+			}
 		});
 		this.header.on('click', this.minimize.bind(this));
 		this.usersArea.on('contextmenu','.user', function(e){
@@ -51,6 +54,7 @@ Chat.prototype = {
 		io.on('all-users', this.manageUsers.bind(this));
 	},
 	manageUsers : function (usersList) {
+		console.log(usersList);
 		this.usersArea.text('');
 		for(var i in usersList)
 			if(usersList[i])
