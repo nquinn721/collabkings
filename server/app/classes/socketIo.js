@@ -19,13 +19,13 @@ module.exports = {
 					user : user, 
 					color : self.colors[Math.round(Math.random() * self.colors.length)]
 				};
-				self.users.push(user);
+				self.users.push(socket.user);
 				socket.emit('init', socket.user);
 				socket.broadcast.emit('add-user', socket.user);
+				io.emit('all-users', self.users);
 			});
 
 			socket.on('get-all-users', function () {
-				io.emit('all-users', self.users);
 			})
 
 			socket.on('projects', function () {
