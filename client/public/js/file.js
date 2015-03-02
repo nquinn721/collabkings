@@ -37,6 +37,7 @@ File.prototype = {
 		this.fileDiv.on('click', this.open.bind(this));
 	},
 	open : function () {
+		$('.context').hide();
 		this.fileDiv.css('background', '#222');
 		return false;
 	},

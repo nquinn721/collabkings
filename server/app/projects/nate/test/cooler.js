@@ -1,3 +1,0 @@
-function (){
-					self.updateProjects(socket);
-				}

@@ -11,7 +11,7 @@ module.exports = {
 		var user = obj.user.toLowerCase(),
 			url = obj.url,
 			file = obj.file;
-		this.fs.writeFile(__dirname + '/../projects/' + user + '/' + url + '/' + file, cb)
+		this.fs.writeFile(__dirname + '/../projects/' + user + '/' + url + '/' + file, '', null, cb)
 	},
 	createFolder : function (obj) {
 		var user = obj.user,
@@ -47,7 +47,7 @@ module.exports = {
 	unlink : function (obj) {
 		var user   = obj.user,
 			url    = obj.url;
-		this.fs.unlink('../projects/' + user + url, function(err){
+		this.fs.unlink(__dirname + '/../projects/' + user + '/' + url, function(err){
 
 		})
 	}

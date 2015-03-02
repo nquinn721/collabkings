@@ -10,6 +10,51 @@
 	color white
 	text-align center
 	display none
+.delete-file 
+	position absolute
+	top 20%
+	border 1px solid #888
+	width 300px
+	z-index 9999
+	left 40%
+	background #222
+	height 100px
+	color white
+	padding 10px
+	display none
+
+	.top 
+		background #777
+		padding 10px
+		margin-bottom 14px
+	.bottom
+		.yes 
+			border 1px solid black
+			background #a90329
+			background -moz-linear-gradient(top,  #a90329 0%, #8f0222 44%, #6d0019 100%)
+			background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#6d0019))
+			background -webkit-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%)
+			background -o-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%)
+			background -ms-linear-gradient(top,  #a90329 0%,#8f0222 44%,#6d0019 100%)
+			background linear-gradient(to bottom,  #a90329 0%,#8f0222 44%,#6d0019 100%)
+			color white
+			border-radius 5px
+			padding 5px 15px
+		.no
+			background #7abcff
+			background -moz-linear-gradient(top,  #7abcff 0%, #60abf8 44%, #396cd3 100%)
+			background -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7abcff), color-stop(44%,#60abf8), color-stop(100%,#396cd3))
+			background -webkit-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#396cd3 100%)
+			background -o-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#396cd3 100%)
+			background -ms-linear-gradient(top,  #7abcff 0%,#60abf8 44%,#396cd3 100%)
+			background linear-gradient(to bottom,  #7abcff 0%,#60abf8 44%,#396cd3 100%)
+			border 1px solid black
+			border-radius 5px
+			padding 5px 15px
+			color white
+			margin-left 10px
+
+	
 
 .projects 
 	no-select()
@@ -37,7 +82,8 @@
 		.file-body
 			overflow-y auto
 			height 87%
-		.folder-context 
+		.folder-context,
+		.file-context
 			position absolute
 			border 1px solid #999
 			z-index 9999

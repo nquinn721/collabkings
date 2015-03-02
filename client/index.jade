@@ -3,6 +3,13 @@ include includes/header
 block content
 	.row
 	.context-menu.context
+	.delete-file
+		.top Are you sure you want to delete
+			span
+			| ?
+		.bottom
+			input.yes(type="button", value="Yes")
+			input.no(type="button", value="No")
 	.create-file
 		.top Create File
 		.bottom: input
