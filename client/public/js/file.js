@@ -29,7 +29,7 @@ File.prototype = {
 		if(this.parent)
 			this.parent.append(project.attr('url', this.parent.attr('url') + '/' + this.file));
 		else
-			this.projectArea.append(project);
+			this.projectArea.append(project.attr('url', '/' + this.file));
 			
 		
 	},
@@ -37,6 +37,7 @@ File.prototype = {
 		this.fileDiv.on('click', this.open.bind(this));
 	},
 	open : function () {
+		$('.context').hide();
 		this.fileDiv.css('background', '#222');
 		return false;
 	},

@@ -11,14 +11,15 @@ Folder.prototype = {
 	},
 
 	createFolder : function () {
-		var folder = $('<div>', {class : 'project ' + this.file, url : this.url}),
+		var project = $('<div>', {class : 'project ' + this.file, url : this.url}),
+			folder = $('<div>', {class : 'folder ' + this.file, text : this.file, url : this.url}),
 			i = $('<i>', {class : 'fa fa-folder-o'});
 
 		this.folder = folder;
 		this.i = i;
 
-		folder.append(i, ' ', this.file);
-		this.projectArea.append(folder);
+		project.append(folder.prepend(i, ' '));
+		this.projectArea.append(project);
 	},
 	eventHandlers : function () {
 		this.folder.on('click', this.open.bind(this));

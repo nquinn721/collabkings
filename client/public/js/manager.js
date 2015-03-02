@@ -46,9 +46,10 @@ Manager.prototype = {
 		});
 
 		$(document).on('click', function (e) {
-			if(!$(e.target).parent().hasClass('context')){
-				$('.context').hide();
-			}
+			$('.context').hide();
+		}).on('keyup', function (e) {
+			if(e.keyCode === 27)
+				$('.message').val('').hide();
 		});
 
 		$('.login form').on('submit', this.login.bind(this));

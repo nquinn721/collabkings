@@ -3,8 +3,31 @@ include includes/header
 block content
 	.row
 	.context-menu.context
-	.create-file
+	#message.yesno
+		.top
+			.message-area
+		.bottom
+			input.yes(type="button", value="Yes")
+			input.no(type="button", value="No")
+	.delete-file.message
+		.top Are you sure you want to delete
+			span
+			| ?
+		.bottom
+			input.yes(type="button", value="Yes")
+			input.no(type="button", value="No")
+	.delete-folder.message
+		.top Are you sure you want to delete
+			span
+			| ?
+		.bottom
+			input.yes(type="button", value="Yes")
+			input.no(type="button", value="No")
+	.create-file.message
 		.top Create File
+		.bottom: input
+	.create-folder.message
+		.top Create Folder
 		.bottom: input
 	.login
 		form Pick a username
@@ -36,16 +59,31 @@ block content
 				.collab-body
 			.file-manager
 				.folder-context.context
-					.createFolder Create Folder
-					.createFile Create File
-					.moveFolder Move
-					.deleteFolder Delete
-					.renameFolder Rename
+					.createFile
+						i.fa.fa-copy
+						| &nbsp; Create File
+					.moveFolder
+						i.fa.fa-arrows
+						| &nbsp; Move
+					.deleteFolder
+						i.fa.fa-trash
+						| &nbsp; Delete
+					.renameFolder
+						i.fa.fa-edit
+						| &nbsp; Rename
 				.file-context.context
-					.moveFile Move
-					.deleteFile Delete
-					.renameFile Rename
+					.moveFile 
+						i.fa.fa-arrows
+						| &nbsp; Move
+					.deleteFile 
+						i.fa.fa-trash
+						| &nbsp; Delete
+					.renameFile 
+						i.fa.fa-edit
+						| &nbsp; Rename
 				.file-head Projects
+					span: img(class="createFile", src="img/new-file.svg", alt="Create File", title="Create File", url="/")
+					span: img(class="createFolder", src="img/new-folder.svg", alt="Create Folder", title="Create Folder", url="/")
 				.file-body
 			.shared-files
 				.shared-head Shared Files
