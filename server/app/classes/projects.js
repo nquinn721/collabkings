@@ -1,6 +1,8 @@
 module.exports = {
 	project : {},
 	fs : require('fs'),
+	mkdir : require('mkdirp'),
+	rimraf : require('rimraf'),
 	init : function (io) {
 		
 	},
@@ -13,12 +15,11 @@ module.exports = {
 			file = obj.file;
 		this.fs.writeFile(__dirname + '/../projects/' + user + '/' + url + '/' + file, '', null, cb)
 	},
-	createFolder : function (obj) {
-		var user = obj.user,
-			url = obj.url;
-		this.fs.mkdir(url, 777, function(err){
-			console.log(err);
-		});
+	createFolder : function (obj, cb) {
+		var user = obj.user.toLowerCase(),
+			url = obj.url,
+			folder = obj.file;
+		this.mkdir(__dirname + '/../projects/' + user + '/' + url + '/' + folder, 777, cb);
 	},
 	renameFile : function (obj) {
 		var user = obj.user,
@@ -38,17 +39,18 @@ module.exports = {
 			file = obj.file,
 			url  = obj.url;
 	},
-	deleteFile : function (obj) {
-		this.unlink(obj);
+	deleteFile : function (obj, cb) {
+		this.unlink(obj, cb);
 	},
-	deleteFolder : function (obj) {
-		this.unlink(obj);
-	},
-	unlink : function (obj) {
+	deleteFolder : function (obj, cb) {
 		var user   = obj.user,
 			url    = obj.url;
-		this.fs.unlink(__dirname + '/../projects/' + user + '/' + url, function(err){
-
-		})
+		this.rimraf(__dirname + '/../projects/' + user + '/' + url, cb)
+	},
+	unlink : function (obj, cb) {
+		var user   = obj.user,
+			url    = obj.url;
+		console.log(__dirname + '/../projects/' + user + '/' + url);
+		this.fs.unlink(__dirname + '/../projects/' + user + '/' + url, cb)
 	}
 }

@@ -1,4 +1,4 @@
-.create-file 
+.create-file, .create-folder 
 	position absolute
 	top 20%
 	height 75px
@@ -10,7 +10,7 @@
 	color white
 	text-align center
 	display none
-.delete-file 
+.delete-file, .delete-folder
 	position absolute
 	top 20%
 	border 1px solid #888
@@ -79,6 +79,15 @@
 		.shared-head
 			padding-bottom 5px
 			border-bottom 1px solid #444
+			span 
+				float right
+				width 30px
+				img 
+					width 19px
+					margin-bottom -8px
+					display inline-block
+					cursor pointer
+		
 		.file-body
 			overflow-y auto
 			height 87%
@@ -99,7 +108,7 @@
 	.project-area
 		height 100%
 		padding 10px
-		border-top: 1px solid #777
+		border-top 1px solid #777
 	
 	.file 
 		font-size 15px

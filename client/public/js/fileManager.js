@@ -9,7 +9,9 @@ function FileManager() {
 	this.folderContext = $('.folder-context');
 	this.fileContext = $('.file-context');
 	this.createFileBox = $('.create-file');
+	this.createFolderBox = $('.create-folder');
 	this.deleteFileBox = $('.delete-file');
+	this.deleteFolderBox = $('.delete-folder');
 }
 
 FileManager.prototype = {
@@ -61,11 +63,19 @@ FileManager.prototype = {
 	eventHandlers : function () {
 		var self = this;
 		this.projectArea.on('contextmenu', '.folder', this.folderMenu.bind(this));
-		this.projectArea.on('click', '.folder-context', this.folderEvent.bind(this));
+		this.projectArea.on('contextmenu', '.file', this.fileMenu.bind(this));
+		this.projectArea.on('click', this.fileEvent.bind(this));
 		this.createFileBox.on('keyup', 'input', function (e) {
 			if(e.keyCode === 13){
 				self.createFileBox.hide();
 				self.updateProject('createFile', $(this).val());
+				$(this).val('');
+			}
+		});
+		this.createFolderBox.on('keyup', 'input', function (e) {
+			if(e.keyCode === 13){
+				self.createFolderBox.hide();
+				self.updateProject('createFolder', $(this).val());
 				$(this).val('');
 			}
 		});
@@ -74,13 +84,23 @@ FileManager.prototype = {
 				self.updateProject('deleteFile');
 			self.deleteFileBox.hide();
 		});
-		this.projectArea.on('contextmenu', '.file', this.fileMenu.bind(this));
+		this.deleteFolderBox.on('click', 'input', function (e) {
+			if($(e.target).hasClass('yes'))
+				self.updateProject('deleteFolder');
+			self.deleteFolderBox.hide();
+		});
 	},
 	showCreateFileBox : function () {
 		this.createFileBox.show().find('input').focus();
 	},
+	showCreateFolderBox : function () {
+		this.createFolderBox.show().find('input').focus();
+	},
 	showDeleteFileBox : function () {
 		this.deleteFileBox.show();	
+	},
+	showDeleteFolderBox : function () {
+		this.deleteFolderBox.show();	
 	},
 	updateProject : function (method, file) {
 		io.emit('project', {
@@ -90,12 +110,19 @@ FileManager.prototype = {
 			file : file
 		})	
 	},
-	folderEvent : function (e) {
-		var method = $(e.target).attr('class');
+	fileEvent : function (e) {
+		var t = $(e.target),
+			method = t.attr('class'),
+			attr = t.attr('url');
+		if(typeof attr !== typeof undefined && attr !== false)
+			this.url = t.attr('url');
 		if(method === 'createFile')this.showCreateFileBox();
+		if(method === 'createFolder')this.showCreateFolderBox();
+		if(method === 'deleteFolder')this.showDeleteFolderBox();
 		if(method === 'deleteFile')this.showDeleteFileBox();
 	},
 	fileMenu : function (e) {
+		$('.context').hide();
 		this.url = $(e.target).attr('url');
 		this.fileContext.show().css({
 			top : e.pageY,
@@ -104,6 +131,7 @@ FileManager.prototype = {
 		return false;
 	},
 	folderMenu : function (e) {
+		$('.context').hide();
 		this.url = $(e.target).attr('url');
 		this.folderContext.show().css({
 			top : e.pageY,

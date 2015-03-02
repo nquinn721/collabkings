@@ -29,7 +29,7 @@ File.prototype = {
 		if(this.parent)
 			this.parent.append(project.attr('url', this.parent.attr('url') + '/' + this.file));
 		else
-			this.projectArea.append(project);
+			this.projectArea.append(project.attr('url', '/' + this.file));
 			
 		
 	},

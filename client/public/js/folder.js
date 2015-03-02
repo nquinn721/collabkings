@@ -12,7 +12,7 @@ Folder.prototype = {
 
 	createFolder : function () {
 		var project = $('<div>', {class : 'project ' + this.file, url : this.url}),
-			folder = $('<div>', {class : 'folder ' + this.file, text : this.file}),
+			folder = $('<div>', {class : 'folder ' + this.file, text : this.file, url : this.url}),
 			i = $('<i>', {class : 'fa fa-folder-o'});
 
 		this.folder = folder;
