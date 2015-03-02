@@ -22,7 +22,6 @@ Row.prototype = {
 		this.removeCursor();
 		this.characters.splice(this.cursorPos, 0, this.createChar(char));
 		this.addCursor(this.cursorPos + 1);
-
 		this.updateText();
 	},
 	addCharacters : function (list, pos) {
@@ -63,13 +62,12 @@ Row.prototype = {
 		return this.cursorPos;	
 	},
 	updateText : function () {
-		this.row.text('');
+		this.getRow().text('');
 		for(var i in this.characters)
-			this.row.append(this.characters[i]);
+			this.getRow().append(this.characters[i]);
 	},
 	getRow : function () {
-		// return $('#' + this.id);	
-		return this.row;
+		return $('#' + this.id);	
 	},
 	enter : function () {
 		var index = this.cursorPos + 1,
