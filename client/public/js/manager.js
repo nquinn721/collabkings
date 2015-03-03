@@ -4,6 +4,7 @@ function Manager () {
 	this.editorManager 	= new EditorManager;
 	this.fileManager 	= new FileManager;
 	this.userManager 	= new UserManager;
+	this.sharedFiles	= new SharedFiles;
 
 }
 
@@ -18,6 +19,7 @@ Manager.prototype = {
 		this.fileManager.init(this, this.user);
 		this.userManager.init(this, this.user);
 		this.editorManager.init(this, this.user);
+		this.sharedFiles.init();
 	},
 	startChat : function (user) {
 		localStorage.user = user;
