@@ -1,4 +1,5 @@
 function FileManager() {
+
 	// Collection
 	this.files = [];
 	this.folders = [];
@@ -120,6 +121,7 @@ FileManager.prototype = {
 		if(method === 'createFolder')this.showCreateFolderBox();
 		if(method === 'deleteFolder')this.showDeleteFolderBox();
 		if(method === 'deleteFile')this.showDeleteFileBox();
+		if(method === 'shareFile')this.shareFile();
 	},
 	fileMenu : function (e) {
 		$('.context').hide();
@@ -138,6 +140,9 @@ FileManager.prototype = {
 			left : 50
 		});
 		return false;
+	},
+	shareFile : function () {
+		io.emit('sharefile', this.url);
 	},
 	open : function () {
 		$(this).find('.file').show();	

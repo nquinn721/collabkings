@@ -2,9 +2,11 @@ module.exports = {
 	users : [],
 	colors : ['red', 'green', 'yellow', 'pink', 'purple', 'blue', 'brown'],
 	wrench : require('wrench'),
-	init : function  (io, projects) {
+	fs : require('fs'),
+	init : function  (io, projects, sharefiles) {
 		this.projects = projects;
 		this.io = io;
+		this.sharefile = sharefiles;
 	},
 	ready : function  () {
 		var io = this.io,
@@ -36,8 +38,12 @@ module.exports = {
 			})
 
 			socket.on('projects', function(){
-				 self.updateProjects(socket);
+				self.updateProjects(socket);
 			});
+
+			socket.on('sharefile', function(url){
+				self.sharefile.addFile(io, socket, url);
+			})
 
 			socket.on('disconnect', function () {
 				if(socket.user){
@@ -48,8 +54,10 @@ module.exports = {
 		});
 	},
 	updateProjects : function (socket) {
-		var name = socket.user.user.toLowerCase(),
-			projects = this.wrench.readdirSyncRecursive(__dirname + "/../projects/" + name);
-		socket.emit("projects", projects);
+		var name = socket.user.user.toLowerCase();
+		if(this.fs.existsSync(__dirname + '/../projects/' + name)){
+			var projects = this.wrench.readdirSyncRecursive(__dirname + "/../projects/" + name);
+			socket.emit("projects", projects);
+		}
 	}
 }
