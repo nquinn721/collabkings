@@ -23,24 +23,42 @@ Editor.prototype = {
 		this.currentRow = row;
 		this.eventHandlers();
 		this.getKeyCodes();
+		this.socketHandlers();
 	},
-	createRow : function () {
+	createRow : function (text, index) {
 		var row = new Row();
-		row.init(this.totalRows);
+		row.init(index || this.totalRows);
+
+
+		if(index){
+			this.updateRowIds(index);
+			this.rows.splice(index, 0, row);
+		} else
+			this.rows.push(row);
+
+
 		this.totalRows++;
-		this.rows.push(row);
 		this.showRows();
+		if(text){
+			if(typeof text === 'object')
+				row.addCharacters(text);
+			else
+				row.addText(text);
+		}
 		return row;
 	},
-	
+	updateRowIds : function (index) {
+		for(var i = index; i < this.totalRows; i++)
+			this.rows[i].updateId(i + 1);	
+	},
 	showRows : function () {
 		this.numbers.html('');
-		this.editor.html('');
+		this.editor.html(''); 
 		for(var i = 0; i < this.totalRows; i++){
-			this.numbers.append(this.rows[i].rowNumber);
-			this.editor.append(this.rows[i].row);
+			this.numbers.append($('<div>', {class : 'row-number', id : "row-number-" + i, text : i + 1}));
+			this.editor.append($('<div>', {class : 'row', id : 'row-' + i}));
+			this.rows[i].updateText();
 		}
-
 	},
 
 	eventHandlers : function () {
@@ -48,37 +66,56 @@ Editor.prototype = {
 		this.codeArea.on('click', this.handleClick.bind(this));
 		this.editor.on('keydown', this.handleKeyup.bind(this));
 	},
+	socketHandlers : function () {
+		io.on('readfile', this.readFile.bind(this));	
+	},
 	handleClick : function (e) {
-		var id = e.target ? e.target.id : e,
+		var target = e.target ? e.target.nodeName === 'SPAN' ? $(e.target).parents('div') : e.target : e,
+			id = $(target).attr('id'),
 			row;
 		this.editor.focus();
 
+
 		if(id.match('character')){
-			this.clearRowCursors();
-			row = this.getRowById(e.target.parentNode.id);
-			row.moveCursorToCharacter(row, id);
+			var characterLeft = $(target).offset().left + ($(target).width() / 2),
+				mouseLeft = e.pageX;
+			row = $(target).parent().attr('id');
+			this.currentRow.removeCursor(id);
+			row = this.getRowById(row);
+			row.moveCursorToCharacter(id, (characterLeft > mouseLeft ? 'left' : 'right'));
+			this.currentRow = row;
 		} else if(id.match('row')){
+			this.currentRow.removeCursor();
 			row = this.getRowById(id);
 			this.moveCursor(row);
 		}else{
+			this.currentRow.removeCursor();
 			row = this.rows[this.rows.length - 1];
 			this.moveCursor(row);
 		}
 
-
+		this.updateHighlighter();
 
 	},
 	handleKeyup : function (e) {
 		var row = this.getRowHasCursor(),
 			ck = this.keyCodes[e.keyCode];
-			
+		
 		// Dont handle any key events if no row has cursor
 		if(!row)return;
 
+		if(ck === 'f5')return true;
+
 
 		if(ck === 'enter'){
-			this.createRow();
+			var index = parseInt(row.id.split('-')[1]);
+			var text = this.currentRow.getRemainingCharacters();
+			if(this.getRowBelow())
+				this.createRow(text, index + 1);
+			else
+				this.createRow(text);
 			this.moveDownRow();
+			this.currentRow.moveCursorToBeginning();
 		}else if(ck === 'up'){
 			this.moveUpRow();
 		}else if(ck === 'down'){
@@ -88,19 +125,46 @@ Editor.prototype = {
 		}else if(ck === 'right'){
 			this.currentRow.moveCursorRight();
 		}else{
-			return this.addCharacter(e);
+			this.addCharacter(e);
 		}
+		this.updateHighlighter();
+		return false;
 	},
-	
+	readFile : function (file) {
+		if(!file){
+			this.clearEditor();
+			this.createRow();
+			return;
+		};
+		var file = file.split("\n");
+		this.rows = [];
+		this.totalRows = 0;
+		for(var i = 0; i < file.length; i++){
+			this.createRow(file[i]);
+		}
+		this.updateHighlighter();
+	},
+	clearEditor : function () {
+		this.rows = [];
+		this.editor.html('');	
+		this.numbers.html('');
+		this.totalRows = 0;
+	},
 	moveDownRow : function () {
 		var row = this.getRowBelow();
 		var pos = this.currentRow.getCursorPos();
-		this.moveCursor(row, pos);
+		if(row){
+			this.currentRow.removeCursor();
+			this.moveCursor(row, pos);
+		}
 	},
 	moveUpRow : function  () {
 		var row = this.getRowAbove();
 		var pos = this.currentRow.getCursorPos();
-		this.moveCursor(row, pos);
+		if(row){
+			this.currentRow.removeCursor();
+			this.moveCursor(row, pos);
+		}
 	},
 	
 	moveCursor : function (row, pos) {
@@ -125,7 +189,6 @@ Editor.prototype = {
 			ch = this.checkCtrl(e, ch);
 			row.addCharacter(ch);
 		}
-		this.updateHighlighter();
 	},
 	checkShift : function (e, ch) {
 		if(e.shiftKey){
@@ -164,6 +227,11 @@ Editor.prototype = {
 			num = parseInt(id.split('-')[1]);
 		if(num !== 0)
 			return this.getRowById('row-'+ (num - 1));
+	},
+	getRowByIndex : function (index) {
+		for(var i in this.rows)
+			if(parseInt(this.rows[i].rowNumber) === parseInt(index))
+				return this.rows[i];
 	},
 	getRowById : function (id) {
 		for(var i in this.rows)
@@ -294,6 +362,7 @@ Editor.prototype = {
 			220 : '\\',
 			221 : ']',
 			222 : "'",
+			116 : "f5",
 			32  : 'spacebar'
 		}
 	}

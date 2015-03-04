@@ -61,7 +61,7 @@
 	position absolute
 	width 20%
 	height 100%
-	padding-top 50px
+	padding-top 75px
 	left 80%
 	background #2C2C2C
 	color white
@@ -79,6 +79,7 @@
 		.shared-head
 			padding-bottom 5px
 			border-bottom 1px solid #444
+			margin-bottom 5px
 			span 
 				float right
 				width 30px
@@ -108,15 +109,16 @@
 	.project-area
 		height 100%
 		padding 10px
-		border-top 1px solid #777
 	
-	.file 
+	.file, .folder
 		font-size 13px
-		cursor default
-		
-	.project 
-		font-size 20px
 		cursor pointer
+		padding 2px
+		&:hover
+			background #333
+	.selected
+		background #222
+	.project 
 		.file
 			padding-left 19px
 			display none

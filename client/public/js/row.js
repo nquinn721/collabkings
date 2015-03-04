@@ -12,11 +12,15 @@ function Row () {
 Row.prototype = {
 	init : function (num) {
 		this.id = 'row-' + num;
-		this.rowNumber = $('<div>', {class : 'row-number', id : "row-number-" + num, text : num + 1});
-		this.row = $('<div>', {class : 'row', id : 'row-' + num});
+		this.rowNumber = num;
 		
 		this.cursor = $('<div>', {class : 'cursor'});
 		// this.eventHandlers();
+	},
+	updateId : function (num) {
+		this.id = 'row-' + num;
+		this.rowNumber = num;
+		this.updateText();
 	},
 	addCharacter : function (char) {
 		this.removeCursor();
@@ -29,7 +33,12 @@ Row.prototype = {
 		for(var i = 0; i < list.length; i++)
 			this.characters.push(list[i]);
 		this.updateText();
-		console.log(this.characters);
+	},
+	addText : function (text) {
+		this.removeCursor();
+		for(var i in text)
+			this.characters.push(this.createChar(text[i]));
+		this.updateText();	
 	},
 	removeCharacter : function (char, pos) {
 		var pos = this.characters.indexOf(this.cursor) - 1;
@@ -51,13 +60,13 @@ Row.prototype = {
 		if(!this.hasCursor)return;
 
 		this.hasCursor = false;
-		this.characters.splice(this.cursorPos, 1);
+		this.characters.splice(this.characters.indexOf(this.cursor), 1);
 		this.updateText();
 	},
-	moveCursorToBeginning : function () {
-		// this.removeCursor();
-		// this.characters.unshift(this.cursor);
+	getRemainingCharacters : function () {
+		return this.characters.splice(this.cursorPos + 1);	
 	},
+	
 	getCursorPos : function () {
 		return this.cursorPos;	
 	},
@@ -82,11 +91,20 @@ Row.prototype = {
 	createChar : function (char) {
 		return $('<div>', {class : 'character', id : 'character-' + this.characters.length, text : char});
 	},
-	moveCursorToCharacter : function (id) {
+	moveCursorToBeginning : function () {
+		// this.removeCursor();
+		// this.characters.unshift(this.cursor);
+		console.log(this.characters);
+		this.characters.splice(this.characters.indexOf(this.cursor), 1);
+		console.log(this.characters);
+		this.characters.unshift(this.cursor);
+		console.log(this.characters);
+	},
+	moveCursorToCharacter : function (id, direction) {
 		var ch = this.getCharacter(id),
 			index = this.characters.indexOf(ch);
 		this.removeCursor();
-		this.addCursor(index);
+		this.addCursor(direction === 'right' ? index + 1 : index);
 	},
 	moveCursorRight : function () {
 		if(this.cursorPos === this.characters.length - 1)return;

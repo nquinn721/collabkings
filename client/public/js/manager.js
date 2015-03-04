@@ -48,7 +48,8 @@ Manager.prototype = {
 		});
 
 		$(document).on('click', function (e) {
-			$('.context').hide();
+			if(!$(e.target).parents().hasClass('context'))
+				$('.context').hide();
 		}).on('keyup', function (e) {
 			if(e.keyCode === 27)
 				$('.message').val('').hide();
