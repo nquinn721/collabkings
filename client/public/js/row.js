@@ -94,11 +94,8 @@ Row.prototype = {
 	moveCursorToBeginning : function () {
 		// this.removeCursor();
 		// this.characters.unshift(this.cursor);
-		console.log(this.characters);
 		this.characters.splice(this.characters.indexOf(this.cursor), 1);
-		console.log(this.characters);
 		this.characters.unshift(this.cursor);
-		console.log(this.characters);
 	},
 	moveCursorToCharacter : function (id, direction) {
 		var ch = this.getCharacter(id),

@@ -19,7 +19,8 @@ module.exports = {
 			});
 			
 			socket.on('project', function(action){
-				self.projects.manage(action, function(){
+				self.projects.manage(action, function(err){
+					console.log(err);
 					self.updateProjects(socket);
 				})
 			});

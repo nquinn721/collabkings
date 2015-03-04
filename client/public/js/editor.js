@@ -65,6 +65,7 @@ Editor.prototype = {
 		var self = this;
 		this.codeArea.on('click', this.handleClick.bind(this));
 		this.editor.on('keydown', this.handleKeyup.bind(this));
+		$('#save').on('click', this.save.bind(this));
 	},
 	socketHandlers : function () {
 		io.on('readfile', this.readFile.bind(this));	
@@ -247,6 +248,13 @@ Editor.prototype = {
 		$('.editor').each(function(i, f){
 			hljs.highlightBlock(f);
 		});
+	},
+
+	save : function () {
+		var str = "";
+		for(var i in this.rows)
+			str += $('#' + this.rows[i].id).text() + "\n";
+		io.emit('project', {user : "Nate", method : "save", file : 'bobart.js', str : str, url : '/'});
 	},
 
 	getKeyCodes : function () {
