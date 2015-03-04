@@ -9,11 +9,15 @@ module.exports = {
 	manage : function (action, cb) {
 		this[action.method](action, cb);
 	},
+	save : function (obj, cb) {
+		this.createFile(obj, cb);
+	},
 	createFile : function (obj, cb) {
 		var user = obj.user.toLowerCase(),
 			url = obj.url,
 			file = obj.file;
-		this.fs.writeFile(__dirname + '/../projects/' + user + '/' + url + '/' + file, '', null, cb)
+
+		this.fs.writeFile(__dirname + '/../projects/' + user + '/' + url + '/' + file, obj.str || '', null, cb)
 	},
 	createFolder : function (obj, cb) {
 		var user = obj.user.toLowerCase(),
