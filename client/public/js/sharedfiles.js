@@ -6,8 +6,7 @@ function SharedFiles () {
 
 SharedFiles.prototype = {
 	init : function () {
-		console.log('init shared files');
-		this.socketEvents();	
+		this.socketEvents();
 	},
 	socketEvents : function () {
 		io.on('sharedfiles', this.handleFiles.bind(this));	
@@ -24,7 +23,7 @@ SharedFiles.prototype = {
 			var file = this.sharedFiles[i].file;
 			var name = this.sharedFiles[i].user.user.toLowerCase();
 			f = file.split('/');
-			this.section.append($('<div>', {class : name + file}).append(fa, ' ', f[f.length - 1]));
+			this.section.append($('<div>', {class : name + file + ' file'}).append(fa, ' ', f[f.length - 1]));
 		}
 	},
 	clearText : function () {

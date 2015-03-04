@@ -3,10 +3,11 @@ module.exports = {
 	colors : ['red', 'green', 'yellow', 'pink', 'purple', 'blue', 'brown'],
 	wrench : require('wrench'),
 	fs : require('fs'),
-	init : function  (io, projects, sharefiles) {
+	init : function  (io, projects, sharefiles, files) {
 		this.projects = projects;
 		this.io = io;
 		this.sharefile = sharefiles;
+		this.files = files;
 	},
 	ready : function  () {
 		var io = this.io,
@@ -33,14 +34,14 @@ module.exports = {
 				socket.broadcast.emit('add-user', socket.user);
 				io.emit('all-users', self.users);
 			});
-
-			socket.on('get-all-users', function () {
-			})
+ 
 
 			socket.on('projects', function(){
 				self.updateProjects(socket);
 			});
-
+			socket.on('readfile', function(url){
+				self.files.loadFile(socket, socket.user.user, url);
+			});
 			socket.on('sharefile', function(url){
 				self.sharefile.addFile(io, socket, url);
 			})
@@ -49,6 +50,7 @@ module.exports = {
 				if(socket.user){
 					self.users.splice(self.users.indexOf(socket.user), 1);
 					io.emit('remove-user', socket.user);
+					self.sharefile.clearUserFiles(socket.user);
 				}
 			});
 		});

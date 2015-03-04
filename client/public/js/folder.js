@@ -26,7 +26,7 @@ Folder.prototype = {
 	},
 	open : function () {
 		if(this.isOpen){
-			this.i.removeClass('fa-folder-open-o').addClass('fa-folder-o');
+			this.i.removeClass('fa-folder-open-o').addClass('fa-folder-o open');
 			this.folder.find('.file').hide();
 			this.isOpen = false;
 		}else{

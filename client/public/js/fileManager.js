@@ -61,6 +61,7 @@ FileManager.prototype = {
 	socketHandlers : function () {
 		io.on("projects", this.parseFiles.bind(this));
 	},
+
 	eventHandlers : function () {
 		var self = this;
 		this.projectArea.on('contextmenu', '.folder', this.folderMenu.bind(this));
@@ -122,6 +123,7 @@ FileManager.prototype = {
 		if(method === 'deleteFolder')this.showDeleteFolderBox();
 		if(method === 'deleteFile')this.showDeleteFileBox();
 		if(method === 'shareFile')this.shareFile();
+		
 	},
 	fileMenu : function (e) {
 		$('.context').hide();
@@ -149,5 +151,9 @@ FileManager.prototype = {
 	},
 	getProjects : function () {
 		io.emit("projects");
+	},
+	hideContext : function () {
+		this.fileContext.hide();
+		this.folderContext.hide();
 	}
 }

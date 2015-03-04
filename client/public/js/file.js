@@ -26,19 +26,26 @@ File.prototype = {
 
 		project.append(i, ' ', this.file);
 		
-		if(this.parent)
+		if(this.parent){
+			this.url = this.parent.attr('url') + '/' + this.file;
 			this.parent.append(project.attr('url', this.parent.attr('url') + '/' + this.file));
-		else
+		} else{
+			this.url = '/' + this.file;
 			this.projectArea.append(project.attr('url', '/' + this.file));
+		}
 			
 		
 	},
+	
+
 	eventHandlers : function () {
-		this.fileDiv.on('click', this.open.bind(this));
+		this.fileDiv.on('click', this.open.bind(this))
 	},
 	open : function () {
 		$('.context').hide();
-		this.fileDiv.css('background', '#222');
+		$('.file').removeClass('selected');
+		this.fileDiv.addClass('selected');
+		io.emit('readfile', this.url);
 		return false;
 	},
 	getParents : function () {

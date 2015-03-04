@@ -52,6 +52,8 @@ block content
 			//- 		option Javascript
 			//- 		option HTML
 			//- 		option CSS
+	.fileTools
+		.file-name
 	.projects
 		.project-area
 			.collaborators
@@ -75,12 +77,12 @@ block content
 					//- .moveFile 
 					//- 	i.fa.fa-arrows
 					//- 	| &nbsp; Move
-					.deleteFile 
-						i.fa.fa-trash
-						| &nbsp; Delete
 					.shareFile
 						i.fa.fa-share-square
 						| &nbsp; Share
+					.deleteFile 
+						i.fa.fa-trash
+						| &nbsp; Delete
 					//- .renameFile 
 					//- 	i.fa.fa-edit
 					//- 	| &nbsp; Rename
@@ -91,7 +93,7 @@ block content
 			.shared-files
 				.shared-head Shared Files
 				.shared-body
-	.javascriptEditor
+	.mainEditor
 		pre.code-area.hljs#editor1
 			.numbers
 			code.editor(tabindex="0", class="javascript")
